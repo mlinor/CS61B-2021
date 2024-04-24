@@ -137,13 +137,13 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        // TODO: Fill in this function. √ Finished
         // traverse the board
         int size = b.size();
         for(int col = 0; col < size; col++){
             for(int row = 0; row < size; row++){
-                Tile tile = b.tile(col, row);
-                if(tile == null){
+                Tile t = b.tile(col, row);
+                if(t == null){
                     return  true;
                 }
             }
@@ -158,6 +158,16 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        // traverse the board
+        int size = b.size();
+        for(int col = 0; col < size; col++){
+            for(int row = 0; row < size; row++){
+                Tile t = b.tile(col, row);
+                if(t != null && t.value() == MAX_PIECE){
+                    return  true;
+                }
+            }
+        }
         return false;
     }
 
