@@ -1,52 +1,55 @@
-public class SLList {
+public class SLList<Item> implements List61B<Item>{
 
-    public static class IntNode {
-        public int item;
-        public IntNode next;
+    public static class ItemNode<Item> {
+        public Item item;
+        public ItemNode next;
 
-        public IntNode(int i, IntNode n){
-            item = i;
+        public ItemNode(Item x, ItemNode n){
+            item = x;
             next = n;
         }
     }
 
-    private IntNode sentinel;
+    private ItemNode sentinel;
     private int size;
 
     // constructor
-    public SLList(int x){
+    public SLList(Item x){
         // item = x
         // next = null
-        sentinel = new IntNode(0, null);
-        sentinel.next = new IntNode(x, null);
+        sentinel = new ItemNode<Item>(null, null);
+        sentinel.next = new ItemNode<Item>(x, null);
         size = 1;
     }
 
     // constructor: create an empty list
     public SLList(){
-        sentinel = new IntNode(0, null);
+        sentinel = new ItemNode<Item>(null, null);
         size = 0;
     }
 
+    @Override
     /** Adds an item to the front of the list. */
-    public void addFirst(int x){
-        sentinel.next = new IntNode(x, sentinel.next);
+    public void addFirst(Item x){
+        sentinel.next = new ItemNode<Item>(x, sentinel.next);
         size += 1;
     }
 
-    /** Retrieves the front item from the list */
-    public int getFirst(){
-        return sentinel.next.item;
-    }
-
+    @Override
     /** Add an item to the end of the list */
-    public void addLast(int x){
-        IntNode p = sentinel;
+    public void addLast(Item x){
+        ItemNode p = sentinel;
         while(p.next != null){
             p = p.next;
         }
-        p.next = new IntNode(x, null);
+        p.next = new ItemNode(x, null);
         size += 1;
+    }
+
+    @Override
+    /** Retrieves the front item from the list */
+    public Item getFirst(){
+        return (Item) sentinel.next.item;
     }
 
     /*
@@ -63,6 +66,53 @@ public class SLList {
     }
     */
 
+    @Override
+    public Item getLast() {
+        ItemNode p = sentinel;
+        while (p.next != null){
+            p = p.next;
+        }
+        return (Item) p.item;
+    }
+
+    @Override
+    public Item removeLast() {
+        ItemNode pre = sentinel;
+        ItemNode p = sentinel;
+        while (p.next != null){
+            p = p.next;
+            pre = p;
+        }
+        pre.next = null;
+        size--;
+        return (Item) p.item;
+    }
+
+    @Override
+    public Item get(int i) {
+        int count = 0;
+        ItemNode p = sentinel;
+        while(count < i){
+            p = sentinel.next;
+            count++;
+        }
+        return (Item) p;
+    }
+
+    @Override
+    public void insert(Item x, int position) {
+        int count = 0;
+        ItemNode p = sentinel;
+        while(count < position - 1){
+            p = p.next;
+            count++;
+        }
+        ItemNode temp = p.next;
+        p.next = new ItemNode<Item>(x, temp);
+        size++;
+    }
+
+    @Override
     public int size(){
         return size;
     }
