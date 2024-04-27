@@ -17,6 +17,7 @@ package randomizedtest;
 public class BuggyAList<Item> {
     private Item[] items;
     private int size;
+    private int capacity;
 
     /** Creates an empty list. */
     public BuggyAList() {
@@ -26,6 +27,7 @@ public class BuggyAList<Item> {
 
     /** Resizes the underlying array to the target capacity. */
     private void resize(int capacity) {
+        this.capacity = capacity;
         Item[] a = (Item[]) new Object[capacity];
         for (int i = 0; i < size; i += 1) {
             a[i] = items[i];
@@ -60,7 +62,7 @@ public class BuggyAList<Item> {
       * returns deleted item. */
     public Item removeLast() {
         if ((size < items.length / 4) && (size > 4)) {
-            resize(size / 4);
+            resize(items.length / 4);
         }
         Item x = getLast();
         items[size - 1] = null;
